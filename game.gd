@@ -12,7 +12,7 @@ func _ready():
 		var enemy = enemy_scene.instantiate()
 		var spawn_pos = Vector2(randf() * screen_size[0], randf() * screen_size[1])
 		enemy.position = spawn_pos
-		$SubViewportContainer/SubViewport/World.add_child(enemy)
+		$SubViewportContainer/SubViewport/World/Mountain.add_child(enemy)
 		
 	pass # Replace with function body.
 
