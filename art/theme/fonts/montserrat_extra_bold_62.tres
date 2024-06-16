@@ -1,0 +1,13 @@
+[gd_resource type="FontFile" load_steps=2 format=3]
+
+[ext_resource type="FontFile" uid="uid://b2r8e5d6rc4pg" path="res://art/theme/fonts/montserrat_extra_bold.otf" id="1"]
+
+
+[resource]
+
+size = 62
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 1 )
+_sections_unfolded = [ "Settings" ]
+
