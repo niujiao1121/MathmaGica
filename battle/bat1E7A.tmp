@@ -1,16 +1,16 @@
-[gd_scene load_steps=37 format=3 uid="uid://dftfnhxmyn5ec"]
+[gd_scene load_steps=25 format=3 uid="uid://dftfnhxmyn5ec"]
 
 [ext_resource type="Texture2D" uid="uid://cjb8ivjvrlgfy" path="res://art/battle/battle_backgroud.png" id="1_e4gt8"]
 [ext_resource type="PackedScene" uid="uid://c5gn22t0h05w4" path="res://art/battle/player.tscn" id="2_ectpx"]
 [ext_resource type="PackedScene" uid="uid://c5srb2kcjkmsm" path="res://art/battle/pig.tscn" id="3_4h6un"]
+[ext_resource type="PackedScene" uid="uid://cn54i2n02x035" path="res://battle/info/info.tscn" id="3_jj45e"]
 [ext_resource type="Script" path="res://battle/UI.gd" id="4_1abmk"]
 [ext_resource type="Script" path="res://battle/player.gd" id="4_bfy1r"]
-[ext_resource type="Script" path="res://battle/info/attribute.gd" id="5_5l6m1"]
-[ext_resource type="Script" path="res://battle/info/info.gd" id="6_fn5t5"]
-[ext_resource type="Script" path="res://battle/info/equip.gd" id="6_xgivr"]
+[ext_resource type="Resource" uid="uid://tnbm87uv3j08" path="res://resources/default_wand.tres" id="5_7midl"]
+[ext_resource type="Resource" uid="uid://dr2rwp07xkhyv" path="res://resources/default_sheild.tres" id="6_v6yyn"]
 [ext_resource type="Script" path="res://battle/enemy.gd" id="7_140bm"]
-[ext_resource type="Script" path="res://battle/info/spell.gd" id="7_dsro2"]
-[ext_resource type="Resource" uid="uid://cqpvnjr8eq605" path="res://resources/default_cost.tres" id="11_b645g"]
+[ext_resource type="Resource" uid="uid://cwi0qbkciq4gu" path="res://resources/default_attack.tres" id="7_nsbmg"]
+[ext_resource type="Resource" uid="uid://csw5vdty4vixw" path="res://resources/default_defend.tres" id="8_btwdr"]
 
 [sub_resource type="GDScript" id="GDScript_3iudf"]
 script/source = "extends CanvasLayer
@@ -34,21 +34,22 @@ func _process(delta):
 
 func _on_button_pressed():
 	print(\"Clicked!\")
-	var temp_spell = $player.info.attack_spell
+	var temp_spell = $player/Info/Spells/Spell
+	var temp_spell1 = $player/Info/Spells/Spell2
 	# 先玩家
 	# 判断施法是否成功
-	if $player.info.chant(temp_spell):
+	if $player/Info.chant(temp_spell):
 		print(\"Spelled!\")
-		var damage = $player.info.attack(temp_spell)
+		var damage = $player/Info.attack(temp_spell)
 		print(\"create damage:\",damage)
 		$player.created_damage.emit(damage)
 		$action.text = \"制造了(\" + str(int(damage.x)) + \",\" + str(int(damage.y)) + \")的伤害\"
 	else:
 		print(\"Spell Fialed\")
 	# 后PE
-	if $enemy.info.chant(temp_spell):
+	if $enemy/Info.chant(temp_spell):
 		print(\"Spelled!\")
-		var damage = $enemy.info.attack(temp_spell)
+		var damage = $enemy/Info.attack(temp_spell)
 		print(\"create damage:\",damage)
 		$enemy.created_damage.emit(damage)
 		$action.text = \"制造了(\" + str(int(damage.x)) + \",\" + str(int(damage.y)) + \")的伤害\"
@@ -62,125 +63,58 @@ func _on_player_exit_battle():
 	queue_free()
 "
 
-[sub_resource type="Resource" id="Resource_00dw6"]
-resource_local_to_scene = true
-script = ExtResource("7_dsro2")
-spell_name = "default_attack"
-spell_properties = Vector4(1, 0, 0, 1)
-speicies = 0
-cost = ExtResource("11_b645g")
+[sub_resource type="GDScript" id="GDScript_mgr08"]
+script/source = "# Complex.gd
+extends Node
 
-[sub_resource type="Resource" id="Resource_tjqep"]
-resource_local_to_scene = true
-script = ExtResource("5_5l6m1")
-species = 0
-hp = Vector2(300, 0)
-sp = Vector2(100, 0)
-atk = Vector2(50, 0)
-def = Vector2(25, 0)
+static func multiply(a:Vector2, b:Vector2):
+	return Vector2(
+		a.x * b.x - a.y * b.y,
+		a.x * b.y + a.y * b.x
+	)
 
-[sub_resource type="Resource" id="Resource_wrrd1"]
-resource_local_to_scene = true
-script = ExtResource("7_dsro2")
-spell_name = "default_defend"
-spell_properties = Vector4(1, 0, 0, 1)
-speicies = 1
-cost = ExtResource("11_b645g")
+static func num_multiply(a:Vector2, b:float):
+	return Vector2(
+		a.x * b , a.y * b
+	)
 
-[sub_resource type="Resource" id="Resource_tvdwg"]
-resource_local_to_scene = true
-script = ExtResource("5_5l6m1")
-species = 0
-hp = Vector2(300, 0)
-sp = Vector2(150, 0)
-atk = Vector2(50, 0)
-def = Vector2(25, 0)
+static func norm(a:Vector2):
+	return sqrt(a.x * a.x + a.y * a.y)
 
-[sub_resource type="Resource" id="Resource_f8r4u"]
-resource_local_to_scene = true
-script = ExtResource("6_xgivr")
-crystal = 0
-equip = 1
-quality = 0.3
+static func pow(a:Vector2, b:float):
+	var r = norm(a)
+	var theta = atan2(a.y, a.x)
+	var result = Vector2(
+		pow(r, b) * cos(b * theta),
+		pow(r, b) * sin(b * theta)
+	)
+	return result
+	
+static func clip(a: Vector2, min: float, max: float) -> Vector2:
+	return Vector2(
+		clamp(a.x, min, max),
+		clamp(a.y, min, max)
+	)
+	
+static func check_ge_0(a: Vector2):
+	return a.x >= 0 and a.y >= 0
+"
 
-[sub_resource type="Resource" id="Resource_f55yg"]
-resource_local_to_scene = true
-script = ExtResource("6_xgivr")
-crystal = 2
-equip = 0
-quality = 0.001
+[sub_resource type="GDScript" id="GDScript_dm5ox"]
+script/source = "# Matrix2D.gd
+extends Node
 
-[sub_resource type="Resource" id="Resource_07epc"]
-resource_local_to_scene = true
-script = ExtResource("6_fn5t5")
-attribute = SubResource("Resource_tjqep")
-limits = SubResource("Resource_tvdwg")
-wand = SubResource("Resource_f55yg")
-sheild = SubResource("Resource_f8r4u")
-attack_spell = SubResource("Resource_00dw6")
-defend_spell = SubResource("Resource_wrrd1")
+static func multiply(a:Vector4, b:Vector2):
+	return Vector2(
+		a.x * b.x + a.y * b.y,
+		a.z * b.x + a.w * b.y
+	)
+"
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eer0c"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_docie"]
 bg_color = Color(0, 0.976471, 0.0431373, 1)
-
-[sub_resource type="Resource" id="Resource_eymym"]
-resource_local_to_scene = true
-script = ExtResource("7_dsro2")
-spell_name = "default_attack"
-spell_properties = Vector4(1, 0, 0, 1)
-speicies = 0
-cost = ExtResource("11_b645g")
-
-[sub_resource type="Resource" id="Resource_mwjlc"]
-resource_local_to_scene = true
-script = ExtResource("5_5l6m1")
-species = 0
-hp = Vector2(300, 0)
-sp = Vector2(100, 0)
-atk = Vector2(50, 0)
-def = Vector2(25, 0)
-
-[sub_resource type="Resource" id="Resource_vxjid"]
-resource_local_to_scene = true
-script = ExtResource("7_dsro2")
-spell_name = "default_defend"
-spell_properties = Vector4(1, 0, 0, 1)
-speicies = 1
-cost = ExtResource("11_b645g")
-
-[sub_resource type="Resource" id="Resource_4wtrx"]
-resource_local_to_scene = true
-script = ExtResource("5_5l6m1")
-species = 0
-hp = Vector2(500, 0)
-sp = Vector2(100, 0)
-atk = Vector2(50, 0)
-def = Vector2(25, 0)
-
-[sub_resource type="Resource" id="Resource_cqjev"]
-resource_local_to_scene = true
-script = ExtResource("6_xgivr")
-crystal = 0
-equip = 1
-quality = 0.1
-
-[sub_resource type="Resource" id="Resource_mybyp"]
-resource_local_to_scene = true
-script = ExtResource("6_xgivr")
-crystal = 0
-equip = 0
-quality = 0.3
-
-[sub_resource type="Resource" id="Resource_0wxvd"]
-script = ExtResource("6_fn5t5")
-attribute = SubResource("Resource_mwjlc")
-limits = SubResource("Resource_4wtrx")
-wand = SubResource("Resource_mybyp")
-sheild = SubResource("Resource_cqjev")
-attack_spell = SubResource("Resource_eymym")
-defend_spell = SubResource("Resource_vxjid")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dto8e"]
 
@@ -203,6 +137,16 @@ bg_color = Color(0.498156, 0.596989, 0.817426, 1)
 [node name="battle_scene" type="CanvasLayer"]
 script = SubResource("GDScript_3iudf")
 
+[node name="Utils" type="Node" parent="."]
+
+[node name="Complex" type="Node" parent="Utils"]
+unique_name_in_owner = true
+script = SubResource("GDScript_mgr08")
+
+[node name="Matrix" type="Node" parent="Utils"]
+unique_name_in_owner = true
+script = SubResource("GDScript_dm5ox")
+
 [node name="BattleBackgroud" type="Sprite2D" parent="."]
 position = Vector2(576, 324.75)
 scale = Vector2(1.05699, 0.999225)
@@ -211,10 +155,15 @@ metadata/_edit_lock_ = true
 
 [node name="player" type="Node2D" parent="."]
 script = ExtResource("4_bfy1r")
-info = SubResource("Resource_07epc")
 
 [node name="Node2D" parent="player" instance=ExtResource("2_ectpx")]
 position = Vector2(329, 382)
+
+[node name="Info" parent="player" instance=ExtResource("3_jj45e")]
+wand = ExtResource("5_7midl")
+sheild = ExtResource("6_v6yyn")
+attack_spell = ExtResource("7_nsbmg")
+defend_spell = ExtResource("8_btwdr")
 
 [node name="UI" type="Control" parent="player"]
 layout_mode = 3
@@ -257,10 +206,11 @@ show_percentage = false
 
 [node name="enemy" type="Node2D" parent="."]
 script = ExtResource("7_140bm")
-info = SubResource("Resource_0wxvd")
 
 [node name="Node2D" parent="enemy" instance=ExtResource("3_4h6un")]
 position = Vector2(797, 296)
+
+[node name="Info" parent="enemy" instance=ExtResource("3_jj45e")]
 
 [node name="UI" type="Control" parent="enemy"]
 layout_mode = 3

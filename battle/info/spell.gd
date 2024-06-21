@@ -1,21 +1,16 @@
-extends Node
+@tool
+extends Resource
 class_name Spell
 
-@export var spell_name = ""
-@export var properties = Vector4(1.0, 0.0, 0.0, 1.0)
-@export var speicies:SpellSpecies
+# --------enum------------
+enum Properties{ ATTACK, DEFENCE} # 进攻属性
 
-var Complex = preload("res://math/complex.gd")
-var Matrix = preload("res://math/matrix.gd")
-
-enum SpellSpecies{
-	ATTACK,
-	DEFENCE
-}
-
-func _init():
-	properties = Vector4(1.0, 0.0, 0.0, 1.0)
+# --------class-----------
+@export var spell_name : String
+@export var spell_properties : Vector4
+@export var speicies : Properties
+@export var cost : Attribute
 
 func compute(attack):
-	var result = Matrix.multiply(properties, attack)
+	var result = math.M_multiply(spell_properties, attack)
 	return result

@@ -1,32 +1,57 @@
-[gd_scene load_steps=5 format=3 uid="uid://cn54i2n02x035"]
+[gd_scene load_steps=11 format=3 uid="uid://d2px30lrafy2v"]
 
 [ext_resource type="Script" path="res://battle/info/info.gd" id="1_ygwom"]
-[ext_resource type="PackedScene" uid="uid://cexv0gtv6ojmm" path="res://battle/info/attribute.tscn" id="2_4s1c2"]
-[ext_resource type="PackedScene" uid="uid://cbc0aqlq55oug" path="res://battle/info/equipment.tscn" id="3_e4w0c"]
-[ext_resource type="PackedScene" uid="uid://uup1e53nxop5" path="res://battle/info/spell.tscn" id="4_80src"]
+[ext_resource type="Script" path="res://battle/info/attribute.gd" id="2_c7ost"]
+[ext_resource type="Script" path="res://battle/info/equip.gd" id="3_6p4xl"]
+[ext_resource type="Script" path="res://battle/info/spell.gd" id="4_tsvnk"]
 
-[node name="Info" type="Node"]
-script = ExtResource("1_ygwom")
-
-[node name="AttributeLimit" parent="." instance=ExtResource("2_4s1c2")]
+[sub_resource type="Resource" id="Resource_eve0j"]
+resource_local_to_scene = true
+script = ExtResource("2_c7ost")
+species = 0
 hp = Vector2(300, 0)
-sp = Vector2(80, 0)
+sp = Vector2(100, 0)
 atk = Vector2(50, 0)
 def = Vector2(25, 0)
 
-[node name="Attribute" parent="." instance=ExtResource("2_4s1c2")]
+[sub_resource type="Resource" id="Resource_xyq21"]
+resource_local_to_scene = true
+script = ExtResource("2_c7ost")
+species = 0
+hp = Vector2(300, 0)
+sp = Vector2(100, 0)
+atk = Vector2(50, 0)
+def = Vector2(25, 0)
 
-[node name="Wand" parent="." instance=ExtResource("3_e4w0c")]
-crystal = 2
-quality = 0.4
+[sub_resource type="Resource" id="Resource_gr7vp"]
+script = ExtResource("3_6p4xl")
+crystal = 0
+equip = 0
+quality = 0.0
 
-[node name="Sheild" parent="." instance=ExtResource("3_e4w0c")]
+[sub_resource type="Resource" id="Resource_q810y"]
+script = ExtResource("3_6p4xl")
+crystal = 0
+equip = 0
+quality = 0.0
 
-[node name="Spells" type="Node" parent="."]
+[sub_resource type="Resource" id="Resource_cb6h6"]
+script = ExtResource("4_tsvnk")
+spell_name = ""
+spell_properties = Vector4(0, 0, 0, 0)
+speicies = 0
 
-[node name="Spell" parent="Spells" instance=ExtResource("4_80src")]
-spell_name = "attack"
+[sub_resource type="Resource" id="Resource_0fb8t"]
+script = ExtResource("4_tsvnk")
+spell_name = ""
+spell_properties = Vector4(0, 0, 0, 0)
+speicies = 0
 
-[node name="Spell2" parent="Spells" instance=ExtResource("4_80src")]
-spell_name = "defence"
-speicies = 1
+[node name="Info" type="Node"]
+script = ExtResource("1_ygwom")
+attribute = SubResource("Resource_eve0j")
+limits = SubResource("Resource_xyq21")
+wand = SubResource("Resource_gr7vp")
+sheild = SubResource("Resource_q810y")
+attack_spell = SubResource("Resource_cb6h6")
+defend_spell = SubResource("Resource_0fb8t")

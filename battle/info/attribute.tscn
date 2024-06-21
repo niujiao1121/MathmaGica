@@ -1,6 +1,29 @@
-[gd_scene load_steps=2 format=3 uid="uid://cexv0gtv6ojmm"]
+[gd_scene load_steps=2 format=3 uid="uid://bt7x6tflncv2v"]
 
-[ext_resource type="Script" path="res://battle/info/attribute.gd" id="1_1onux"]
+[sub_resource type="GDScript" id="GDScript_5n41k"]
+script/source = "extends Node
+
+enum Species{
+	CREATURE,
+	UNDEAD,
+	GODS
+}
+
+@export var species:Species
+
+@export var hp:Vector2
+@export var sp:Vector2
+@export var atk:Vector2
+@export var def:Vector2
+
+func _is_dead():
+	if species == Species.CREATURE:
+		return hp.x < 1.
+	if species == Species.UNDEAD:
+		return abs(hp.y) < 1.
+	if species == Species.GODS:
+		return %math.C_norm(hp) < 1.
+"
 
 [node name="Attribute" type="Node"]
-script = ExtResource("1_1onux")
+script = SubResource("GDScript_5n41k")
