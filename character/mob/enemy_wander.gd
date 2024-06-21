@@ -6,6 +6,8 @@ extends RigidBody2D
 @export var stand_time = 2
 @export var stand_time_float = 0.5
 
+var active = true
+
 var battle = preload("res://battle/battle.tscn")
 
 var screen_size
@@ -27,18 +29,18 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	#position += velocity * delta
-	#position = position.clamp(Vector2.ZERO + collision_size, screen_size - collision_size)
-	if stand:
-		$AnimatedSprite2D.play("stand")
-	else:
-		$AnimatedSprite2D.flip_h = velocity.x < 0
-		$AnimatedSprite2D.play("run")
+	if active:
+		if stand:
+			$AnimatedSprite2D.play("stand")
+		else:
+			$AnimatedSprite2D.flip_h = velocity.x < 0
+			$AnimatedSprite2D.play("run")
 		
 func _physics_process(delta):
 	# 运动
 	# move_toward(velocity.x, velocity.y, speed)
-	move_and_collide(speed * velocity * delta)
+	if active:
+		move_and_collide(speed * velocity * delta)
 
 		
 
@@ -62,6 +64,10 @@ func _on_wander_timer_timeout():
 func _on_detect_region_body_entered(body):
 	if body is Player:
 		print("Player entered Enemy...")
+		# 暂停游戏
+		var game_handle = get_parent().get_parent().get_parent().get_parent()
+		game_handle.set_active(false)
+		
 		var battleTemp = battle.instantiate()
 		get_parent().add_child(battleTemp)
 		queue_free()

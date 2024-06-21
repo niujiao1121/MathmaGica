@@ -49,22 +49,22 @@ func _process(delta):
 			$AnimatedSprite2D.play("stand")
 
 func _physics_process(delta):
-	# 速度归一化
-	velocity = velocity.normalized()
-	
-	# 打印碰撞信息
-	var collision = move_and_collide(speed * velocity * delta)
-	if collision and print_debug_collision:
-		print("I collided with ", collision.get_collider().name)
-
-	# Using move_and_slide.
-	move_and_slide()
-	
-	for i in get_slide_collision_count():
-		collision = get_slide_collision(i)
-		print("I collided with ", collision.get_collider().name)
+	if active:
+		# 速度归一化
+		velocity = velocity.normalized()
 		
-	pass
+		# 打印碰撞信息
+		var collision = move_and_collide(speed * velocity * delta)
+		if collision and print_debug_collision:
+			print("I collided with ", collision.get_collider().name)
+
+		# Using move_and_slide.
+		move_and_slide()
+		
+		for i in get_slide_collision_count():
+			collision = get_slide_collision(i)
+			print("I collided with ", collision.get_collider().name)
+			
 
 func set_active(is_active):
 	active = is_active

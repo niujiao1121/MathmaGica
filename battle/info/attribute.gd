@@ -1,4 +1,3 @@
-@tool
 extends Resource
 class_name Attribute
 
@@ -6,7 +5,6 @@ class_name Attribute
 enum Species{ CREATURE, UNDEAD, GODS} # 种族属性
 
 # --------class-----------
-	
 @export var species:Species
 @export var hp:Vector2
 @export var sp:Vector2

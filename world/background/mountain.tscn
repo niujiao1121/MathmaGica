@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://kldr7c4dieb"]
 
-[ext_resource type="Texture2D" uid="uid://cit817wrl4cwk" path="res://img/tilesets/mountain_landscape.png" id="1_qnp5b"]
-[ext_resource type="Texture2D" uid="uid://bwfv1vsgmj1fq" path="res://img/tilesets/mountain_house_exterior.png" id="2_13r2n"]
-[ext_resource type="Texture2D" uid="uid://dydtqw4iapa5t" path="res://img/tilesets/mountain_house_exterior2.png" id="3_bfwk1"]
+[ext_resource type="Texture2D" uid="uid://cit817wrl4cwk" path="res://art/img/tilesets/mountain_landscape.png" id="1_qnp5b"]
+[ext_resource type="Texture2D" uid="uid://bwfv1vsgmj1fq" path="res://art/img/tilesets/mountain_house_exterior.png" id="2_13r2n"]
+[ext_resource type="Texture2D" uid="uid://dydtqw4iapa5t" path="res://art/img/tilesets/mountain_house_exterior2.png" id="3_bfwk1"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1eqp5"]
 texture = ExtResource("1_qnp5b")

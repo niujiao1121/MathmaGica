@@ -59,7 +59,7 @@ resource_local_to_scene = true
 script = ExtResource("6_xgivr")
 crystal = 2
 equip = 0
-quality = 0.3
+quality = 0.001
 
 [sub_resource type="Resource" id="Resource_07epc"]
 resource_local_to_scene = true

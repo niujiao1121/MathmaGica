@@ -1,6 +1,6 @@
 extends Area2D
 
-@export var detect_size = 10 # Units: pixelvar wait_interact = false
+@export var detect_size = 10 # Units: pixel
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var parent = get_parent()
