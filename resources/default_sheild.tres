@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Equip" load_steps=2 format=3 uid="uid://dr2rwp07xkhyv"]
+
+[ext_resource type="Script" path="res://battle/info/equip.gd" id="1_3t3dl"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_3t3dl")
+crystal = 0
+equip = 1
+quality = 0.3

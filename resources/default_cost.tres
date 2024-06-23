@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Attribute" load_steps=2 format=3 uid="uid://cqpvnjr8eq605"]
+
+[ext_resource type="Script" path="res://battle/info/attribute.gd" id="1_ro50a"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_ro50a")
+species = 0
+hp = Vector2(0, 0)
+sp = Vector2(10, 0)
+atk = Vector2(0, 0)
+def = Vector2(0, 0)

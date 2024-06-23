@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://c5gn22t0h05w4"]
+
+[ext_resource type="Texture2D" uid="uid://bfnfj2m6ycldk" path="res://art/gail/gale_01a.png" id="1_637h1"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Gale01a" type="Sprite2D" parent="."]
+position = Vector2(-4.76837e-07, 5.96046e-08)
+scale = Vector2(5, 5)
+texture = ExtResource("1_637h1")

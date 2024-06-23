@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://c5srb2kcjkmsm"]
+
+[ext_resource type="Texture2D" uid="uid://bnngytpn5putc" path="res://art/pig/e_baby_boar_01a.png" id="1_0pqri"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="EBabyBoar01a" type="Sprite2D" parent="."]
+scale = Vector2(2.9569, 2.77778)
+texture = ExtResource("1_0pqri")

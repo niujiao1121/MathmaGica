@@ -1,0 +1,64 @@
+[gd_resource type="Resource" script_class="Info" load_steps=12 format=3 uid="uid://bbmjkoxvytlv"]
+
+[ext_resource type="Resource" uid="uid://cqpvnjr8eq605" path="res://resources/default_cost.tres" id="1_u7khy"]
+[ext_resource type="Script" path="res://battle/info/spell.gd" id="2_axlt2"]
+[ext_resource type="Script" path="res://battle/info/attribute.gd" id="3_w440s"]
+[ext_resource type="Script" path="res://battle/info/info.gd" id="4_6mdqt"]
+[ext_resource type="Script" path="res://battle/info/equip.gd" id="5_ybpaw"]
+
+[sub_resource type="Resource" id="Resource_eymym"]
+resource_local_to_scene = true
+script = ExtResource("2_axlt2")
+spell_name = "default_attack"
+spell_properties = Vector4(1, 0, 0, 1)
+speicies = 0
+cost = ExtResource("1_u7khy")
+
+[sub_resource type="Resource" id="Resource_mwjlc"]
+resource_local_to_scene = true
+script = ExtResource("3_w440s")
+species = 0
+hp = Vector2(300, 0)
+sp = Vector2(100, 0)
+atk = Vector2(50, 0)
+def = Vector2(25, 0)
+
+[sub_resource type="Resource" id="Resource_vxjid"]
+resource_local_to_scene = true
+script = ExtResource("2_axlt2")
+spell_name = "default_defend"
+spell_properties = Vector4(1, 0, 0, 1)
+speicies = 1
+cost = ExtResource("1_u7khy")
+
+[sub_resource type="Resource" id="Resource_4wtrx"]
+resource_local_to_scene = true
+script = ExtResource("3_w440s")
+species = 0
+hp = Vector2(300, 0)
+sp = Vector2(100, 0)
+atk = Vector2(50, 0)
+def = Vector2(25, 0)
+
+[sub_resource type="Resource" id="Resource_cqjev"]
+resource_local_to_scene = true
+script = ExtResource("5_ybpaw")
+crystal = 0
+equip = 1
+quality = 0.3
+
+[sub_resource type="Resource" id="Resource_mybyp"]
+resource_local_to_scene = true
+script = ExtResource("5_ybpaw")
+crystal = 0
+equip = 0
+quality = 0.3
+
+[resource]
+script = ExtResource("4_6mdqt")
+attribute = SubResource("Resource_mwjlc")
+limits = SubResource("Resource_4wtrx")
+wand = SubResource("Resource_mybyp")
+sheild = SubResource("Resource_cqjev")
+attack_spell = SubResource("Resource_eymym")
+defend_spell = SubResource("Resource_vxjid")
