@@ -34,8 +34,6 @@ rotation = -1.5708
 shape = SubResource("WorldBoundaryShape2D_skyqd")
 debug_color = Color(0, 0.6, 0.701961, 1)
 
-[node name="Background" parent="." instance=ExtResource("2_un8eb")]
-
 [node name="Mountain" parent="." instance=ExtResource("2_un8eb")]
 position = Vector2(8, -8)
 
