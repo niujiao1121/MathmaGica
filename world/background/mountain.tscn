@@ -315,7 +315,7 @@ sources/0 = SubResource("TileSetAtlasSource_1eqp5")
 sources/1 = SubResource("TileSetAtlasSource_xrgkf")
 sources/2 = SubResource("TileSetAtlasSource_eyftx")
 
-[node name="Background" type="Node2D"]
+[node name="Mountain" type="Node2D"]
 
 [node name="Mountain" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_yd7k2")

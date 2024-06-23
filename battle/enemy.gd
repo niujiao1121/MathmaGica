@@ -28,6 +28,7 @@ func _on_player_created_damage(damage):
 	print("player get damaged")
 	info.defence(now_spell, damage)
 	if info.attribute._is_dead():
-		print("Dead")
+		get_parent().show_message("你被打败了！")
+		await get_parent().get_node("action").get_node("MessageTimer").timeout
 		exit_battle.emit()
 	update_ui()
